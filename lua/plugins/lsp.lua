@@ -1,10 +1,28 @@
+local mason_ensure_installed = {
+    -- LUA
+    "lua_ls",
+    -- C/CPP
+    "clangd",
+    -- RUST
+    "rust_analyzer",
+    -- PYTHON
+    "pyright",
+    -- JAVASCRIPT
+    "ts_ls",
+    "eslint",
+    -- JAVA
+    "jdtls",
+    -- BASH
+    "bashls",
+}
+
 local function config()
     local lsp_zero = require("lsp-zero")
 
     local lsp_attach = function(client, bufnr)
         lsp_zero.buffer_autoformat()
 
-        local opts = {buffer = bufnr}
+        local opts = { buffer = bufnr }
 
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
         vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
@@ -34,6 +52,7 @@ local function config()
 
     require("mason").setup({})
     require("mason-lspconfig").setup({
+        ensure_installed = mason_ensure_installed,
         handlers = {
             function(server_name)
                 require("lspconfig")[server_name].setup({})
@@ -50,10 +69,10 @@ local function config()
 
     cmp.setup({
         sources = {
-            {name = "path"},
-            {name = "nvim_lsp"},
-            {name = "luasnip", keyword_length = 2},
-            {name = "buffer", keyword_length = 3},
+            { name = "path" },
+            { name = "nvim_lsp" },
+            { name = "luasnip", keyword_length = 2 },
+            { name = "buffer",  keyword_length = 3 },
         },
         window = {
             completion = cmp.config.window.bordered(),
@@ -81,7 +100,7 @@ local function config()
         }),
         -- note: if you are going to use lsp-kind (another plugin)
         -- replace the line below with the function from lsp-kind
-        formatting = lsp_zero.cmp_format({details = true}),
+        formatting = lsp_zero.cmp_format({ details = true }),
     })
 end
 
@@ -103,6 +122,5 @@ return {
         "rafamadriz/friendly-snippets",
     },
 
-    config=config,
+    config = config,
 }
-
