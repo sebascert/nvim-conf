@@ -64,6 +64,10 @@ function Lint()
     end
 end
 
+local function linters_config()
+    local linters = require("lint").linters
+end
+
 local function config(_, opts)
     local lint = require("lint")
     lint.linters_by_ft = opts.linters_by_ft
@@ -80,18 +84,21 @@ local function config(_, opts)
 
     vim.api.nvim_set_keymap("n", "<leader>ls", ":lua LintingStatus()<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>lt", ":lua ToggleLinting()<CR>", { noremap = true, silent = true })
+
+    linters_config()
 end
 
 return {
     "mfussenegger/nvim-lint",
     opts = {
         -- Event to trigger linters
-        events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+        -- events = { "BufWritePost", "BufReadPost", "InsertLeave" },
+        events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI", },
         linters_by_ft = {
             python = { "pylint" },
             lua = { "stylua" },
             bash = { "shellcheckbeautysh" },
-            c = { "cpplint" },
+            -- c = { "cpplint" },
             cpp = { "cpplint" },
             make = { "checkmake" },
             ["*"] = { "codespell" },
