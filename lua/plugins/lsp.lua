@@ -57,6 +57,14 @@ local function config()
             function(server_name)
                 require("lspconfig")[server_name].setup({})
             end,
+            bashls = function()
+                require("lspconfig").bashls.setup({
+                    on_init = function(client, _)
+                        client.server_capabilities.documentFormattingProvider = false
+                        client.server_capabilities.documentRangeFormattingProvider = false
+                    end,
+                })
+            end
         }
     })
 

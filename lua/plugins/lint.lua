@@ -32,7 +32,7 @@ function M.debounce(ms, fn)
 end
 
 function Lint()
-    -- Use nvim-lint's logic first:
+    -- Use nvim-lint"s logic first:
     -- * checks if linters exist for the full filetype first
     -- * otherwise will split filetype by "." and add all those linters
     -- * this differs from conform.nvim which only uses the first filetype that has a formatter
@@ -50,7 +50,7 @@ function Lint()
     -- Add global linters.
     vim.list_extend(names, lint.linters_by_ft["*"] or {})
 
-    -- Filter out linters that don't exist or don't match the condition.
+    -- Filter out linters that don"t exist or don"t match the condition.
     local ctx = { filename = vim.api.nvim_buf_get_name(0) }
     ctx.dirname = vim.fn.fnamemodify(ctx.filename, ":h")
     names = vim.tbl_filter(function(name)
@@ -64,8 +64,22 @@ function Lint()
     end
 end
 
+function GetLinters()
+    local linters = require("lint").get_running()
+    if #linters == 0 then
+        return "no linters"
+    end
+    return "󱉶 " .. table.concat(linters, ", ")
+end
+
 local function linters_config()
     local linters = require("lint").linters
+
+    linters.shellcheck.args = {
+        "--format", "json",
+        "--shell", "bash",
+        "-",
+    }
 end
 
 local function config(_, opts)
@@ -82,10 +96,15 @@ local function config(_, opts)
         end,
     })
 
-    vim.api.nvim_set_keymap("n", "<leader>ls", ":lua LintingStatus()<CR>", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("n", "<leader>lt", ":lua ToggleLinting()<CR>", { noremap = true, silent = true })
-
     linters_config()
+
+    local cmd = vim.api.nvim_create_user_command
+    cmd("Lint", function() Lint() end, { nargs = 0 })
+    cmd("GetLinters", function() print(GetLinters()) end, { nargs = 0 })
+
+    local keymap = vim.api.nvim_set_keymap
+    keymap("n", "<leader>ls", ":lua LintingStatus()<CR>", { noremap = true, silent = true })
+    keymap("n", "<leader>lt", ":lua ToggleLinting()<CR>", { noremap = true, silent = true })
 end
 
 return {
@@ -97,7 +116,8 @@ return {
         linters_by_ft = {
             python = { "pylint" },
             lua = { "stylua" },
-            bash = { "shellcheckbeautysh" },
+            bash = { "shellcheck" },
+            sh = { "shellcheck" },
             -- c = { "cpplint" },
             cpp = { "cpplint" },
             make = { "checkmake" },

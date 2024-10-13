@@ -11,6 +11,8 @@ return {
         formatters_by_ft = {
             lua = { "stylua" },
             python = { "isort", "black" },
+            sh = { "beautysh" },
+            bash = { "beautysh" },
             -- filetype to run formatters on all filetypes.
             ["*"] = { "codespell" },
             -- filetypes that don't have other formatters configured.
