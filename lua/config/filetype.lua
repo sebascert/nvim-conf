@@ -20,21 +20,23 @@ local NO_PRIORITY = 0 -- No mapping should have this priority
 
 local mappings = {
     { -- extension
-        priority = MAX_PRIORITY,
+        priority = LOW_PRIORITY,
         map = function()
             local buf = vim.api.nvim_get_current_buf()
             local buf_name = vim.api.nvim_buf_get_name(buf)
 
-            if string.match(buf_name, ".h$") then
+            if string.match(buf_name, "%.h$") then
                 return "c"
-            elseif string.match(buf_name, ".hpp$") then
+            elseif string.match(buf_name, "%.hpp$") then
                 return "cpp"
+                -- elseif string.match(buf_name, "%.sh$") then
+                --     return "bash"
             end
         end,
     },
 
     { -- shebang
-        priority = LOW_PRIORITY,
+        priority = MAX_PRIORITY,
         map = function()
             local first_line = vim.fn.getline(1)
 
@@ -42,9 +44,8 @@ local mappings = {
                 return
             end
 
-            if string.match(first_line, "bash") then
-                return "bash"
-            elseif string.match(first_line, "sh") then
+            if string.match(first_line, "bash") or
+                string.match(first_line, "sh") then
                 return "sh"
             elseif string.match(first_line, "python") then
                 return "python"

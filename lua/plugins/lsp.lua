@@ -64,7 +64,7 @@ local function config()
                         client.server_capabilities.documentRangeFormattingProvider = false
                     end,
                 })
-            end
+            end,
         }
     })
 

@@ -33,6 +33,12 @@ vim.keymap.set("n", "<leader>S", [[:%s/<C-r>"/<C-r>"/gI<Left><Left><Left>]])
 
 -- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
+vim.keymap.set("n", "<leader>bn", vim.cmd.bn)
+vim.keymap.set("n", "<leader>bp", vim.cmd.bp)
+vim.keymap.set("n", "<leader>bls", vim.cmd.ls)
+vim.keymap.set("n", "<leader>bd", vim.cmd.bd)
+
+vim.keymap.set("n", "<C-PageUp>", vim.cmd.bn)
+vim.keymap.set("n", "<C-PageDown>", vim.cmd.bp)
+
+vim.keymap.set("n", "<leader><leader>", vim.cmd.so)
