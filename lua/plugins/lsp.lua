@@ -15,6 +15,9 @@ local mason_ensure_installed = {
     -- BASH
     "bashls",
     -- Arduino,
+    -- arduino_language_server is incompatible to nvim 0.10
+    -- https://github.com/arduino/arduino-language-server/issues/187
+    -- using locally compiled for nvim 10 compatibility
     -- "arduino_language_server",
 }
 
@@ -60,11 +63,9 @@ local function config()
             function(server_name)
                 require("lspconfig")[server_name].setup({})
             end,
-            bashls = require("lsp-handler.bash"),
+            bashls = require("lsp-handler.bashls"),
             clangd = require("lsp-handler.clangd"),
-            -- arduino_language_server is incompatible to nvim 0.10
-            -- https://github.com/arduino/arduino-language-server/issues/187
-            -- arduino_language_server = require("lsp-handler.arduino-language-server"),
+            arduino_language_server = require("lsp-handler.arduino-language-server"),
         }
     })
 

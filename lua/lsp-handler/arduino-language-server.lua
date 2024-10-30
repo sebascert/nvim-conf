@@ -30,13 +30,12 @@ local function get_sketch_fqbn(root_dir)
 end
 
 local function on_new_config(config, root_dir)
-    local clangd = vim.fn.system("which clangd")
+    local clangd = vim.fn.system("which clangd"):gsub("%s+$", "")
 
-    local arduino_cli = vim.fn.system("which arduino-cli")
+    local arduino_cli = vim.fn.system("which arduino-cli"):gsub("%s+$", "")
 
-    local arduino_cli_config = vim.fn.system([[
-    arduino-cli config get directories.data | head -n1 | xargs -I {} echo '{}/arduino_cli.yaml'
-    ]])
+    local arduino_cli_config = vim.fn.system("arduino-cli config get directories.data")
+    arduino_cli_config = arduino_cli_config:gsub("%s+$", "") .. "/arduino_cli.yaml"
 
     local fqbn = get_sketch_fqbn(root_dir) or "arduino:avr:uno"
 
@@ -51,9 +50,6 @@ local function on_new_config(config, root_dir)
         "-cli-config", arduino_cli_config,
         "-fqbn", fqbn,
     }
-
-    config.capabilities.textDocument.semanticTokens = vim.NIL
-    config.capabilities.workspace.semanticTokens = vim.NIL
 end
 
 return function()
