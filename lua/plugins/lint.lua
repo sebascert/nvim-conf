@@ -113,6 +113,7 @@ return {
         -- Event to trigger linters
         events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI", },
         linters_by_ft = {
+            rust = { "rust-analyzer" },
             python = { "pylint" },
             lua = { "stylua" },
             bash = { "shellcheck" },

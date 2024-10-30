@@ -9,6 +9,7 @@ return {
     priority = 1000,
     opts = {
         formatters_by_ft = {
+            rust = { "rustfmt" },
             lua = { "stylua" },
             python = { "isort", "black" },
             sh = { "beautysh" },
