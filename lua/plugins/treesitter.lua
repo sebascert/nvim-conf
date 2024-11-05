@@ -2,6 +2,13 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = {
+        highlight = {
+            enable = true,
+            disable = {
+                enable = true,
+                "latex",
+            }
+        },
         ensure_installed = {
             -- Languages
             "c",
@@ -31,7 +38,6 @@ return {
 
         sync_install = false,
         auto_install = true,
-        highlight = { enable = true },
         indent = { enable = true },
     },
 

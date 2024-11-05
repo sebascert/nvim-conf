@@ -14,6 +14,8 @@ local mason_ensure_installed = {
     "jdtls",
     -- BASH
     "bashls",
+    -- LATEX
+    "texlab",
     -- Arduino,
     -- arduino_language_server is incompatible to nvim 0.10
     -- https://github.com/arduino/arduino-language-server/issues/187
@@ -94,7 +96,7 @@ local function config()
         },
         mapping = cmp.mapping.preset.insert({
             -- confirm completion item
-            ["<Enter>"] = cmp.mapping.confirm({ select = true }),
+            ["<TAB>"] = cmp.mapping.confirm({ select = true }),
 
             -- trigger completion menu
             ["<C-Space>"] = cmp.mapping.complete(),

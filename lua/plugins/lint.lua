@@ -121,6 +121,7 @@ return {
             -- c = { "cpplint" },
             cpp = { "cpplint" },
             make = { "checkmake" },
+            tex = { "vale" },
             ["*"] = { "codespell" },
         },
     },
