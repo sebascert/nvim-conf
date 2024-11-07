@@ -1,7 +1,6 @@
 local rg_find_patterns = {
     { "-g", "!.git" },
-    { "-g", "!venv" },
-    { "-g", "!pyvenv" },
+    { "-g", "!*venv" },
     { "-g", "!__pycache__" },
     { "-g", "!node_modules" },
 }
