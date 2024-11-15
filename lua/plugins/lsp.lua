@@ -6,7 +6,8 @@ local mason_ensure_installed = {
     -- RUST
     "rust_analyzer",
     -- PYTHON
-    "pyright",
+    "jedi_language_server",
+    -- "ruff",
     -- JAVASCRIPT
     "ts_ls",
     "eslint",
@@ -41,8 +42,7 @@ local function config()
         vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
         vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
         if client.server_capabilities.documentFormattingProvider then
-            vim.keymap.set({ "n", "x" }, "<F3>",
-                "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+            vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
         end
     end
 
@@ -55,7 +55,7 @@ local function config()
         },
         lsp_attach = lsp_attach,
         float_border = "rounded",
-        capabilities = require("cmp_nvim_lsp").default_capabilities()
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
     })
 
     require("mason").setup({})
@@ -65,10 +65,11 @@ local function config()
             function(server_name)
                 require("lspconfig")[server_name].setup({})
             end,
+            -- ruff = require("lsp-handler.ruff"),
             bashls = require("lsp-handler.bashls"),
             clangd = require("lsp-handler.clangd"),
             arduino_language_server = require("lsp-handler.arduino-language-server"),
-        }
+        },
     })
 
     local cmp = require("cmp")

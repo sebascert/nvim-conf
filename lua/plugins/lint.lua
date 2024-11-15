@@ -76,8 +76,10 @@ local function linters_config()
     local linters = require("lint").linters
 
     linters.shellcheck.args = {
-        "--format", "json",
-        "--shell", "bash",
+        "--format",
+        "json",
+        "--shell",
+        "bash",
         "-",
     }
 end
@@ -99,8 +101,12 @@ local function config(_, opts)
     linters_config()
 
     local cmd = vim.api.nvim_create_user_command
-    cmd("Lint", function() Lint() end, { nargs = 0 })
-    cmd("GetLinters", function() print(GetLinters()) end, { nargs = 0 })
+    cmd("Lint", function()
+        Lint()
+    end, { nargs = 0 })
+    cmd("GetLinters", function()
+        print(GetLinters())
+    end, { nargs = 0 })
 
     local keymap = vim.api.nvim_set_keymap
     keymap("n", "<leader>ls", ":lua LintingStatus()<CR>", { noremap = true, silent = true })
@@ -111,7 +117,7 @@ return {
     "mfussenegger/nvim-lint",
     opts = {
         -- Event to trigger linters
-        events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI", },
+        events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI" },
         linters_by_ft = {
             rust = { "rust-analyzer" },
             python = { "pylint" },

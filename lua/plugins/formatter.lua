@@ -1,8 +1,4 @@
-local function formatters_config(formatters)
-    formatters.isort = {
-        prepend_args = { "--profile", "black" },
-    }
-end
+local function formatters_config(formatters) end
 
 return {
     "stevearc/conform.nvim",
@@ -20,7 +16,7 @@ return {
             ["_"] = { "trim_whitespace" },
         },
         format_after_save = {
-            lsp_format = "prefer",
+            lsp_format = "fallback",
         },
     },
     config = function(_, opts)
@@ -32,5 +28,5 @@ return {
         vim.keymap.set({ "n", "x" }, "<F3>", function()
             require("conform").format({ async = true })
         end)
-    end
+    end,
 }
