@@ -7,7 +7,7 @@ return {
             disable = {
                 enable = true,
                 "latex",
-            }
+            },
         },
         ensure_installed = {
             -- Languages
