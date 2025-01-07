@@ -1,28 +1,6 @@
-local function get_sketch(root_dir)
-    local sketch_config_filename = "sketch.yaml"
+local function get_sketch_fqbn(sketch_root)
     local path_sep = package.config:sub(1, 1)
-
-    local current_dir = root_dir
-    while current_dir do
-        local sketch_path = current_dir .. path_sep .. sketch_config_filename
-        local file = io.open(sketch_path, "r")
-
-        if file then
-            file:close()
-            return sketch_path
-        else
-            -- Move up one directory
-            local parent_dir = current_dir:match("^(.*)" .. path_sep)
-            if parent_dir == current_dir then
-                return nil
-            end
-            current_dir = parent_dir
-        end
-    end
-end
-
-local function get_sketch_fqbn(sketch_path)
-    local file = io.open(sketch_path, "r")
+    local file = io.open(sketch_root .. path_sep .. "sketch.yaml", "r")
 
     if not file then
         return nil
@@ -49,7 +27,7 @@ local function on_new_config(config, root_dir)
     local arduino_cli_config = vim.fn.system("arduino-cli config get directories.data")
     arduino_cli_config = arduino_cli_config:gsub("%s+$", "") .. "/arduino_cli.yaml"
 
-    local fqbn = get_sketch_fqbn(get_sketch(root_dir)) or "arduino:avr:uno"
+    local fqbn = get_sketch_fqbn(root_dir) or "arduino:avr:uno"
 
     if not fqbn then
         return
@@ -75,18 +53,26 @@ local function on_attach(client, bufnr)
     -- detach clangd
     for _, active_client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
         if active_client.name == "clangd" then
+            -- active_client.handlers["textDocument/publishDiagnostics"] = function() end
             vim.defer_fn(function()
                 vim.lsp.buf_detach_client(bufnr, active_client.id)
             end, 10)
             break
         end
     end
+    ToggleLinting(false)
+end
+
+local function on_deattach()
+    ToggleLinting(true)
 end
 
 return function()
     require("lspconfig").arduino_language_server.setup({
+        root_dir = vim.fs.root(0, { "sketch.yaml", "*.ino" }),
         filetypes = { "arduino", "cpp", "h", "c" },
         on_attach = on_attach,
+        on_deattach = on_deattach,
         on_new_config = on_new_config,
     })
 end

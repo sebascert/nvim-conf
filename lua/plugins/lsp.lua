@@ -6,7 +6,7 @@ local mason_ensure_installed = {
     -- RUST
     "rust_analyzer",
     -- PYTHON
-    "jedi_language_server",
+    "pyright",
     -- "ruff",
     -- JAVASCRIPT
     "ts_ls",
