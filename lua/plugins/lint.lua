@@ -10,10 +10,9 @@ function LintingStatus()
     end
 end
 
-function ToggleLinting()
-    M.linting = not M.linting
-
-    if M.linting then
+function ToggleLinting(enable)
+    M.linting = enable
+    if enable then
         Lint()
     else
         vim.diagnostic.reset()
@@ -104,13 +103,15 @@ local function config(_, opts)
     cmd("Lint", function()
         Lint()
     end, { nargs = 0 })
+    cmd("LintEnable", function()
+        ToggleLinting(true)
+    end, { nargs = 0 })
+    cmd("LintDisable", function()
+        ToggleLinting(false)
+    end, { nargs = 0 })
     cmd("GetLinters", function()
         print(GetLinters())
     end, { nargs = 0 })
-
-    local keymap = vim.api.nvim_set_keymap
-    keymap("n", "<leader>ls", ":lua LintingStatus()<CR>", { noremap = true, silent = true })
-    keymap("n", "<leader>lt", ":lua ToggleLinting()<CR>", { noremap = true, silent = true })
 end
 
 return {
@@ -120,7 +121,7 @@ return {
         events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI" },
         linters_by_ft = {
             rust = { "rust-analyzer" },
-            python = { "pylint" },
+            python = { "pylint", "mypy" },
             lua = { "stylua" },
             bash = { "shellcheck" },
             sh = { "shellcheck" },

@@ -3,6 +3,7 @@ local rg_find_patterns = {
     { "-g", "!*venv" },
     { "-g", "!__pycache__" },
     { "-g", "!node_modules" },
+    { "-g", "!.mypy_cache" },
 }
 
 local function ffiles_cmd()
@@ -29,12 +30,11 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
     dependencies = {
-        "nvim-lua/plenary.nvim"
+        "nvim-lua/plenary.nvim",
     },
     opts = {
         pickers = {
-            find_files = {
-            },
+            find_files = {},
         },
     },
 
