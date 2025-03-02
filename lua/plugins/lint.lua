@@ -99,6 +99,11 @@ local function config(_, opts)
 
     linters_config()
 
+    -- Define a keymap for FX that executes a Lua function
+    vim.keymap.set("n", "<F1>", function()
+        Lint()
+    end)
+
     local cmd = vim.api.nvim_create_user_command
     cmd("Lint", function()
         Lint()
@@ -121,7 +126,6 @@ return {
         events = { "BufReadPost", "BufWritePost", "TextChanged", "TextChangedI" },
         linters_by_ft = {
             rust = { "rust-analyzer" },
-            python = { "pylint", "mypy" },
             lua = { "stylua" },
             bash = { "shellcheck" },
             sh = { "shellcheck" },

@@ -7,7 +7,6 @@ return {
         formatters_by_ft = {
             rust = { "rustfmt" },
             lua = { "stylua" },
-            python = { "isort", "black" },
             sh = { "beautysh" },
             bash = { "beautysh" },
             -- filetype to run formatters on all filetypes.

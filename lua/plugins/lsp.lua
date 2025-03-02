@@ -58,6 +58,8 @@ local function config()
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
     })
 
+    require("lsp-handler.ruff")()
+
     require("mason").setup({})
     require("mason-lspconfig").setup({
         ensure_installed = mason_ensure_installed,
@@ -65,7 +67,7 @@ local function config()
             function(server_name)
                 require("lspconfig")[server_name].setup({})
             end,
-            -- ruff = require("lsp-handler.ruff"),
+            pyright = require("lsp-handler.pyright"),
             bashls = require("lsp-handler.bashls"),
             clangd = require("lsp-handler.clangd"),
             arduino_language_server = require("lsp-handler.arduino-language-server"),
