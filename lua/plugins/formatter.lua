@@ -10,7 +10,7 @@ return {
             sh = { "beautysh" },
             bash = { "beautysh" },
             -- filetype to run formatters on all filetypes.
-            ["*"] = { "codespell" },
+            ["*"] = { "trim_whitespace" },
             -- filetypes that don't have other formatters configured.
             ["_"] = { "trim_whitespace" },
         },

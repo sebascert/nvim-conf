@@ -85,6 +85,8 @@ end
 
 local function config(_, opts)
     local lint = require("lint")
+    M.linting = true
+
     lint.linters_by_ft = opts.linters_by_ft
 
     vim.api.nvim_create_autocmd(opts.events, {
