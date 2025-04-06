@@ -13,6 +13,8 @@ local mason_ensure_installed = {
     "eslint",
     -- JAVA
     "jdtls",
+    -- C#
+    -- "roslyn",
     -- BASH
     "bashls",
     -- LATEX
@@ -60,7 +62,12 @@ local function config()
 
     require("lsp-handler.ruff")()
 
-    require("mason").setup({})
+    require("mason").setup({
+        registries = {
+            "github:Crashdummyy/mason-registry",
+            "github:mason-org/mason-registry",
+        },
+    })
     require("mason-lspconfig").setup({
         ensure_installed = mason_ensure_installed,
         handlers = {
