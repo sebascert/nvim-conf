@@ -19,6 +19,8 @@ local mason_ensure_installed = {
     "bashls",
     -- LATEX
     "texlab",
+    -- MARKDOWN
+    "marksman",
     -- Arduino,
     -- arduino_language_server is incompatible to nvim 0.10
     -- https://github.com/arduino/arduino-language-server/issues/187

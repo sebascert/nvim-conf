@@ -9,6 +9,7 @@ return {
             lua = { "stylua" },
             sh = { "beautysh" },
             bash = { "beautysh" },
+            markdown = { "prettier" },
             -- filetype to run formatters on all filetypes.
             ["*"] = { "trim_whitespace" },
             -- filetypes that don't have other formatters configured.
