@@ -9,12 +9,22 @@ return {
             lua = { "stylua" },
             sh = { "beautysh" },
             bash = { "beautysh" },
-            markdown = { "prettier" },
             sql = { "sqlfmt" },
+            markdown = { "dprint" },
+            scheme = { "dprint" },
             -- filetype to run formatters on all filetypes.
             ["*"] = { "trim_whitespace" },
             -- filetypes that don't have other formatters configured.
             ["_"] = { "trim_whitespace" },
+        },
+        formatters = {
+            injected = { options = { ignore_errors = true } },
+            -- # Example of using dprint only when a dprint.json file is present
+            dprint = {
+                condition = function(ctx)
+                    return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
+                end,
+            },
         },
         format_after_save = {
             lsp_format = "fallback",
