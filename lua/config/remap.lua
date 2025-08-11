@@ -70,3 +70,5 @@ keymap("n", "<leader><leader>", vim.cmd.so)
 cmd("Bcppath", function()
     vim.fn.setreg("+", vim.fn.expand("%:p"))
 end, {})
+
+cmd("Nw", "noautocmd w", {})
