@@ -12,6 +12,7 @@ return {
             sql = { "sqlfmt" },
             markdown = { "dprint" },
             scheme = { "dprint" },
+            dart = { "dart_format" },
             -- filetype to run formatters on all filetypes.
             ["*"] = { "trim_whitespace" },
             -- filetypes that don't have other formatters configured.

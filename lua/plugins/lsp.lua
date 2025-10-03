@@ -72,6 +72,7 @@ local function config()
     })
 
     require("lsp-handler.ruff")()
+    require("lsp-handler.dart")()
 
     require("mason").setup({
         registries = {
