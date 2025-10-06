@@ -89,6 +89,7 @@ local function config()
             pyright = require("lsp-handler.pyright"),
             bashls = require("lsp-handler.bashls"),
             clangd = require("lsp-handler.clangd"),
+            texlab = require("lsp-handler.texlab"),
             arduino_language_server = require("lsp-handler.arduino-language-server"),
         },
     })

@@ -13,6 +13,7 @@ return {
             markdown = { "dprint" },
             scheme = { "dprint" },
             dart = { "dart_format" },
+            tex = { "tex-fmt" },
             -- filetype to run formatters on all filetypes.
             ["*"] = { "trim_whitespace" },
             -- filetypes that don't have other formatters configured.
