@@ -1,3 +1,5 @@
+require("profiles.cp")
+
 require("config.set")
 require("config.remap")
 require("config.configs")

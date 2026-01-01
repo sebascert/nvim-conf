@@ -1,12 +1,3 @@
-local CP_PROFILE = "/.nvim_cp_profile"
-
--- check if .nvim_cp_profile exists in cwd or parent dirs
-local function has_cp_profile()
-    local cwd = vim.fn.getcwd()
-    local file = cwd .. CP_PROFILE
-    return vim.fn.filereadable(file) == 1
-end
-
 local mason_ensure_installed = {
     -- LUA
     "lua_ls",
@@ -105,7 +96,7 @@ local function config()
         completion = {
             autocomplete = { cmp.TriggerEvent.TextChanged },
         },
-        sources = has_cp_profile() and {} or {
+        sources = vim.g.CP_PROFILE and {} or {
             { name = "path" },
             { name = "nvim_lsp" },
             { name = "luasnip", keyword_length = 2 },
