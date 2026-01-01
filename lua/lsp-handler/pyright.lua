@@ -10,7 +10,6 @@ local function on_attach(client, bufnr)
     end
 end
 
-ToggleLinting(false)
 return function()
     require("lspconfig").pyright.setup({
         on_attach = on_attach,

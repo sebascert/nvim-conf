@@ -1,9 +1,9 @@
-local M = {}
-
-M.linting = true
+if vim.g.linting == nil then
+    vim.g.linting = true
+end
 
 function LintingStatus()
-    if M.linting then
+    if vim.g.linting then
         print("linting")
     else
         print("not linting")
@@ -11,7 +11,7 @@ function LintingStatus()
 end
 
 function ToggleLinting(enable)
-    M.linting = enable
+    vim.g.linting = enable
     if enable then
         Lint()
     else
@@ -19,7 +19,7 @@ function ToggleLinting(enable)
     end
 end
 
-function M.debounce(ms, fn)
+local function debounce(ms, fn)
     local timer = vim.uv.new_timer()
     return function(...)
         local argv = { ... }
@@ -85,17 +85,16 @@ end
 
 local function config(_, opts)
     local lint = require("lint")
-    M.linting = true
 
     lint.linters_by_ft = opts.linters_by_ft
 
     vim.api.nvim_create_autocmd(opts.events, {
         group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
         callback = function()
-            if not M.linting then
+            if not vim.g.linting then
                 return
             end
-            M.debounce(100, Lint)()
+            debounce(100, Lint)()
         end,
     })
 
